@@ -5,13 +5,6 @@ use std::path::PathBuf;
 use ureq::get;
 use walkdir::WalkDir;
 
-macro_rules! regex {
-    ($re:literal $(,)?) => {{
-        static RE: once_cell::sync::OnceCell<regex::Regex> = once_cell::sync::OnceCell::new();
-        RE.get_or_init(|| regex::Regex::new($re).unwrap())
-    }};
-}
-
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)]
 struct Cli {
@@ -49,25 +42,14 @@ fn main() -> Result<()> {
         .filter(|e| e.file_type().is_file())
         .for_each(|e| {
             let path = e.path();
-            if path
-                .components()
-                .any(|a| a.as_os_str() != "target" || a.as_os_str() != "Cargo.lock")
-            {
-            } else {
-                let text = std::fs::read_to_string(path).unwrap();
-                let text = replace(regex!("__YEAR__"), &cli.year.to_string(), &text).unwrap();
-                let text = replace(regex!("__DAY__"), &cli.day.to_string(), &text).unwrap();
-                std::fs::write(path, text).unwrap();
-            }
+
+            let text = std::fs::read_to_string(path).unwrap();
+            let text = text.replace("__YEAR__", &cli.year.to_string());
+            let text = text.replace("__DAY__", &cli.day.to_string());
+            std::fs::write(path, text).unwrap();
         });
 
     Ok(())
-}
-
-use regex::Regex;
-
-fn replace(re: &Regex, replace_with: &str, text: &str) -> Result<String> {
-    Ok(re.replace_all(text, replace_with).to_string())
 }
 
 fn get_input(cli: &Cli) -> Result<String> {

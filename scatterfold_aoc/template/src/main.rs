@@ -1,6 +1,10 @@
-use anyhow::Result;
+#![allow(unused_imports)]
+#![allow(dead_code)]
 
-const input: &str = include_str!("input.txt");
+use anyhow::Result;
+use itertools::Itertools;
+
+const INPUT: &str = include_str!("../input.txt");
 
 fn main() -> Result<()> {
     let part1 = part1()?;

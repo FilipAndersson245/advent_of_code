@@ -1,8 +1,9 @@
 [package]
-name = "aoc___YEAR____DAY__"
+name = "aoc___YEAR_____DAY__"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+aoc-util = { git = "https://github.com/FilipAndersson245/advent_of_code" }
 anyhow = "1.0.75"
 itertools = "0.12.0"
