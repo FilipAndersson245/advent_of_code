@@ -1,6 +1,6 @@
 use std::ops::{Index, IndexMut};
 
-use super::position::Position;
+use crate::Point;
 
 /// A grid is a 2D array of data. rows are first, then columns.
 #[derive(Clone)]
@@ -39,10 +39,10 @@ impl<T: Clone + Default> Grid<T> {
     }
 }
 
-impl<T: Clone + Default> Index<Position> for Grid<T> {
+impl<T: Clone + Default> Index<Point> for Grid<T> {
     type Output = T;
 
-    fn index(&self, index: Position) -> &Self::Output {
+    fn index(&self, index: Point) -> &Self::Output {
         debug_assert!(index.x >= 0);
         debug_assert!(index.y >= 0);
         self.data
@@ -51,11 +51,12 @@ impl<T: Clone + Default> Index<Position> for Grid<T> {
     }
 }
 
-impl<T> IndexMut<Position> for Grid<T>
+impl<T> IndexMut<Point> for Grid<T>
 where
     T: Clone + Default,
 {
-    fn index_mut(&mut self, index: Position) -> &mut Self::Output {
+    #[inline]
+    fn index_mut(&mut self, index: Point) -> &mut Self::Output {
         debug_assert!(index.x >= 0);
         debug_assert!(index.y >= 0);
         self.data
@@ -69,8 +70,10 @@ where
     T: Clone + Default,
 {
     type Output = T;
+
+    #[inline]
     fn index(&self, (x, y): (i32, i32)) -> &Self::Output {
-        &self[Position::new(x, y)]
+        &self[Point::new(x, y)]
     }
 }
 
@@ -78,8 +81,9 @@ impl<T> IndexMut<(i32, i32)> for Grid<T>
 where
     T: Clone + Default,
 {
+    #[inline]
     fn index_mut(&mut self, (x, y): (i32, i32)) -> &mut Self::Output {
-        &mut self[Position::new(x, y)]
+        &mut self[Point::new(x, y)]
     }
 }
 
@@ -88,8 +92,10 @@ where
     T: Clone + Default,
 {
     type Output = T;
+
+    #[inline]
     fn index(&self, (x, y): (u32, u32)) -> &Self::Output {
-        &self[Position::new(x as i32, y as i32)]
+        &self[Point::new(x as i32, y as i32)]
     }
 }
 
@@ -97,7 +103,8 @@ impl<T> IndexMut<(u32, u32)> for Grid<T>
 where
     T: Clone + Default,
 {
+    #[inline]
     fn index_mut(&mut self, (x, y): (u32, u32)) -> &mut Self::Output {
-        &mut self[Position::new(x as i32, y as i32)]
+        &mut self[Point::new(x as i32, y as i32)]
     }
 }

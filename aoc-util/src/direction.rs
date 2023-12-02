@@ -11,6 +11,7 @@ pub enum Direction {
 }
 
 impl Direction {
+    #[inline]
     pub const fn opposite(&self) -> Self {
         match self {
             Direction::North => Direction::South,
@@ -24,6 +25,7 @@ impl Direction {
         }
     }
 
+    #[inline]
     pub const fn cardinals() -> [Self; 4] {
         [
             Direction::North,
@@ -33,6 +35,7 @@ impl Direction {
         ]
     }
 
+    #[inline]
     pub const fn eightway() -> [Self; 8] {
         [
             Direction::North,
@@ -46,6 +49,7 @@ impl Direction {
         ]
     }
 
+    #[inline]
     pub const fn diagonals() -> [Self; 4] {
         [
             Direction::NorthEast,
@@ -59,6 +63,7 @@ impl Direction {
 impl TryFrom<(i32, i32)> for Direction {
     type Error = anyhow::Error;
 
+    #[inline]
     fn try_from(value: (i32, i32)) -> Result<Self, Self::Error> {
         let direction = match value {
             (0, 1) => Direction::North,
@@ -78,6 +83,7 @@ impl TryFrom<(i32, i32)> for Direction {
 }
 
 impl From<Direction> for (i32, i32) {
+    #[inline]
     fn from(value: Direction) -> Self {
         match value {
             Direction::North => (0, 1),
