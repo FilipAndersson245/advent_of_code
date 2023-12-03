@@ -15,4 +15,5 @@ gxhash = ["dep:gxhash"]
 [dependencies]
 anyhow = "1.0.75"
 gxhash = { version = "2.2.4", optional = true }
+#indexmap = "2.1.0"
 parsing = { path = "./parsing", optional = true }

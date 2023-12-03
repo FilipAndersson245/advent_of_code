@@ -1,19 +1,22 @@
-use std::ops::{Index, IndexMut};
+use std::{
+    fmt::Debug,
+    ops::{Index, IndexMut},
+};
 
 use crate::Point;
 
 /// A grid is a 2D array of data. rows are first, then columns.
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct Grid<T>
 where
-    T: Clone + Default,
+    T: Clone + Default + Debug,
 {
     data: Vec<T>,
     pub width: u32,
     pub height: u32,
 }
 
-impl<T: Clone + Default> Grid<T> {
+impl<T: Clone + Default + Debug> Grid<T> {
     pub fn new(width: u32, height: u32) -> Self {
         Self {
             data: std::iter::repeat(T::default())
@@ -39,7 +42,7 @@ impl<T: Clone + Default> Grid<T> {
     }
 }
 
-impl<T: Clone + Default> Index<Point> for Grid<T> {
+impl<T: Clone + Default + Debug> Index<Point> for Grid<T> {
     type Output = T;
 
     fn index(&self, index: Point) -> &Self::Output {
@@ -53,7 +56,7 @@ impl<T: Clone + Default> Index<Point> for Grid<T> {
 
 impl<T> IndexMut<Point> for Grid<T>
 where
-    T: Clone + Default,
+    T: Clone + Default + Debug,
 {
     #[inline]
     fn index_mut(&mut self, index: Point) -> &mut Self::Output {
@@ -67,7 +70,7 @@ where
 
 impl<T> Index<(i32, i32)> for Grid<T>
 where
-    T: Clone + Default,
+    T: Clone + Default + Debug,
 {
     type Output = T;
 
@@ -79,7 +82,7 @@ where
 
 impl<T> IndexMut<(i32, i32)> for Grid<T>
 where
-    T: Clone + Default,
+    T: Clone + Default + Debug,
 {
     #[inline]
     fn index_mut(&mut self, (x, y): (i32, i32)) -> &mut Self::Output {
@@ -89,7 +92,7 @@ where
 
 impl<T> Index<(u32, u32)> for Grid<T>
 where
-    T: Clone + Default,
+    T: Clone + Default + Debug,
 {
     type Output = T;
 
@@ -101,7 +104,7 @@ where
 
 impl<T> IndexMut<(u32, u32)> for Grid<T>
 where
-    T: Clone + Default,
+    T: Clone + Default + Debug,
 {
     #[inline]
     fn index_mut(&mut self, (x, y): (u32, u32)) -> &mut Self::Output {
