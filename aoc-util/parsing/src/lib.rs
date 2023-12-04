@@ -40,3 +40,32 @@ macro_rules! capture_regex {
         }
     }
 }
+
+#[macro_export]
+macro_rules! capture_regex_line {
+    ($fn_name:ident = $regex:literal, $($capture:ty),* $(,)?) => {
+        fn $fn_name(input: &str) -> $crate::anyhow::Result<Vec<( $($capture),* )>> {
+            capture_regex!(inner = $regex, $($capture),*);
+            input
+                .lines()
+                .map(|line| inner(line))
+                .collect::<$crate::anyhow::Result<Vec<( $($capture),* )>>>()
+        }
+
+
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    capture_regex_line!(test = r"(\d+) (\d+) (\d+)", i32, i32, i32);
+
+    #[test]
+    fn test_name() {
+        let a = "1 2 3\n4 5 6\n7 8 9";
+        let res = test(a).unwrap();
+        assert_eq!(res, vec![(1, 2, 3), (4, 5, 6), (7, 8, 9)]);
+    }
+}
