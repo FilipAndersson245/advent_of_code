@@ -4,6 +4,8 @@ use itertools::Itertools;
 
 const INPUT: &str = include_str!("../input.txt");
 
+use cached::proc_macro::cached;
+
 fn main() -> Result<()> {
     let part1 = part1()?;
     println!("Part 1: {}", part1);
@@ -44,6 +46,13 @@ fn part2() -> Result<usize> {
     Ok(total_score)
 }
 
+use cached::SizedCache;
+
+#[cached(
+    type = "SizedCache<usize, usize>",
+    create = "{ SizedCache::with_size(150) }",
+    convert = r#"{ idx }"#
+)]
 fn rec_solver(
     all_scratches: &Vec<(usize, (HashSet<usize>, HashSet<usize>))>,
     winning_numb: &HashSet<usize>,
