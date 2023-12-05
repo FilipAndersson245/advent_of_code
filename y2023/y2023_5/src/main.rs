@@ -5,6 +5,7 @@ use std::str::FromStr;
 
 use anyhow::{Ok, Result};
 use itertools::Itertools;
+use rayon::prelude::*;
 
 const INPUT: &str = include_str!("../input.txt");
 
@@ -48,7 +49,6 @@ impl From<(String, String, Vec<Mapping>)> for MappingFoo {
     }
 }
 
-// TODO maybe cache?
 impl MappingFoo {
     fn map(&self, input: usize) -> usize {
         let mut output = input;
@@ -95,8 +95,6 @@ fn part1() -> Result<usize> {
     Ok(total)
 }
 
-use rayon::prelude::*;
-
 fn part2() -> Result<usize> {
     let input = INPUT;
     let initial_seeds = get_initial_seeds(input);
@@ -107,17 +105,6 @@ fn part2() -> Result<usize> {
         .collect_vec();
 
     let mut total = usize::MAX;
-
-    // for seed in &seed_vec {
-    //     let mut seed = *seed;
-    //     for mapping in &mappings {
-    //         seed = mapping.map(seed);
-    //     }
-
-    //     if seed < total {
-    //         total = seed;
-    //     }
-    // }
 
     initial_seeds.chunks(2).for_each(|chunk| {
         let start = chunk[0];
