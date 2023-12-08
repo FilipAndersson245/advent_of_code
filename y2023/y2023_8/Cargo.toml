@@ -1,0 +1,11 @@
+[package]
+name = "aoc_2023_8"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+aoc-util = { git = "https://github.com/FilipAndersson245/advent_of_code" }
+anyhow = "1.0.75"
+itertools = "0.12.0"
+cached = "0.46.1"
+num = "0.4.1"
