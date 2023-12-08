@@ -88,11 +88,16 @@ fn part2() -> Result<usize> {
         })
         .collect();
 
+    println!("s: {:?}", start_pos);
+    println!("e: {:?}", end_pos);
+    println!("");
+
     let map: HashMap<String, (String, String)> =
         map.into_iter().map(|(k, l, r)| (k, (l, r))).collect();
 
     // let len = walking_dir.len();
-    let mut curr_pos = start_pos.iter().cloned().collect_vec();
+    let curr_pos = start_pos.iter().cloned().collect_vec();
+    let indexes = vec![0; curr_pos.len()];
     let mut steps = vec![0; curr_pos.len()];
 
     for i in 0..curr_pos.len() {
