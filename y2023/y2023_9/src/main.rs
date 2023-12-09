@@ -31,6 +31,13 @@ fn part1() -> Result<usize> {
 }
 
 fn part2() -> Result<usize> {
+    let inputs = get_inputs();
+
+    let res: i64 = inputs.iter().map(extrapolate_value_part2).sum();
+    Ok(res as usize)
+}
+
+fn get_inputs() -> Vec<Vec<i64>> {
     let inputs = INPUT
         .lines()
         .map(|l| {
@@ -39,9 +46,7 @@ fn part2() -> Result<usize> {
                 .collect_vec()
         })
         .collect_vec();
-
-    let res: i64 = inputs.iter().map(extrapolate_value_part2).sum();
-    Ok(res as usize)
+    inputs
 }
 
 fn extrapolate_value_part1(x: &Vec<i64>) -> i64 {
