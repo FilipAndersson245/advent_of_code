@@ -17,22 +17,13 @@ fn main() -> Result<()> {
 }
 
 fn part1() -> Result<usize> {
-    let inputs = INPUT
-        .lines()
-        .map(|l| {
-            l.split_ascii_whitespace()
-                .map(|ch| ch.parse::<i64>().unwrap())
-                .collect_vec()
-        })
-        .collect_vec();
-
+    let inputs = get_inputs();
     let res: i64 = inputs.iter().map(extrapolate_value_part1).sum();
     Ok(res as usize)
 }
 
 fn part2() -> Result<usize> {
     let inputs = get_inputs();
-
     let res: i64 = inputs.iter().map(extrapolate_value_part2).sum();
     Ok(res as usize)
 }
@@ -53,9 +44,7 @@ fn extrapolate_value_part1(x: &Vec<i64>) -> i64 {
     if is_all_zeroes(x) {
         return 0;
     }
-
     let value_to_append = extrapolate_value_part1(&generate_differences(x));
-
     x.last().unwrap() + value_to_append
 }
 
@@ -65,7 +54,6 @@ fn extrapolate_value_part2(x: &Vec<i64>) -> i64 {
     }
 
     let values_to_prepend = extrapolate_value_part2(&generate_differences(x));
-
     x.first().unwrap() - values_to_prepend
 }
 
