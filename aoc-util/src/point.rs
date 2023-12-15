@@ -7,7 +7,7 @@ use std::{
 use crate::direction::Direction;
 
 /// A point in a 2D grid.
-#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Point {
     pub x: i32,
     pub y: i32,
