@@ -17,16 +17,8 @@ fn main() -> Result<()> {
     Ok(())
 }
 
-fn part1() -> Result<usize> {
-    Ok(part_1(INPUT))
-}
-
-fn part2() -> Result<usize> {
-    Ok(part_2(INPUT))
-}
-
-pub fn part_1(_input: &str) -> usize {
-    solve(_input.lines().map(|line| {
+pub fn part1() -> Result<usize> {
+    let res = solve(INPUT.lines().map(|line| {
         let mut chars = line.split_ascii_whitespace();
 
         let direction = match chars.next().unwrap() {
@@ -38,11 +30,13 @@ pub fn part_1(_input: &str) -> usize {
         };
         let length: usize = chars.next().unwrap().parse().unwrap();
         (length, direction)
-    }))
+    }));
+
+    Ok(res)
 }
 
-pub fn part_2(_input: &str) -> usize {
-    solve(_input.lines().map(|line| {
+pub fn part2() -> Result<usize> {
+    let res = solve(INPUT.lines().map(|line| {
         let (_, hex) = line.split_once('#').unwrap();
         let mut chars = hex.chars();
 
@@ -60,7 +54,9 @@ pub fn part_2(_input: &str) -> usize {
         };
 
         (length, direction)
-    }))
+    }));
+
+    Ok(res)
 }
 
 fn solve<T>(iter: T) -> usize
